@@ -6,29 +6,43 @@
 ;; (french-japanese-conv "in-test.txt" "output.csv")
 ;; -> generate output.csv
 
+(defconstant *const-match-loop-max* 10)
+
 (defparameter *japanese-french-dic-url* "http://9.dee.cc/~hakase2/tokuken.php")
 
+;; TODO meaning-treeの1件目を無条件に選ぶのではなくdomを検索して、一致したindexを使用する
 (defun get-japanese (target-word)
   (let* ((result-html (dex:post *japanese-french-dic-url*
                                 :content `(("mado" . ,target-word)
                                            ("erab" . "tango")
                                            ("ktype" . "1"))))
          (parse-tree (plump:parse result-html))
-         (word-tree)
+         (aref-index -1)
          (meaning-tree)
          (meaning-text ""))
-    (setq word-tree (clss:select "span.midcs" parse-tree))
+    (setq aref-index (get-matched-index (clss:select "span.midcs" parse-tree) target-word))
     (setq meaning-tree (clss:select "p.yakcs" parse-tree))
-    (if (and (>  (length meaning-tree) 0) (>  (length meaning-tree) 0))
+    (if (and (>  (length meaning-tree) 0) (>= aref-index 0))
         (progn
-          (setq word-tree (aref word-tree 0))
-          (if (string= target-word (plump:text word-tree))
-              (progn
-                (setq meaning-tree (aref meaning-tree 0))
-                (setq meaning-text (plump:text meaning-tree))
-                (setq meaning-text (substitute #\、 #\, meaning-text))))))
+          (progn
+            (setq meaning-tree (aref meaning-tree aref-index))
+            (setq meaning-text (plump:text meaning-tree))
+            (setq meaning-text (substitute #\、 #\, meaning-text)))))
     meaning-text
     ))
+
+(defun get-matched-index (word-tree target-word)
+  (let ((index -1)
+        (loop-max 0))
+    (if (> (length word-tree) *const-match-loop-max*)
+        (setq loop-max *const-match-loop-max*)
+        (setq loop-max (length word-tree)))
+    (loop for ii from 0 to (- loop-max 1) do
+      (if (string= (plump:text (aref word-tree ii)) target-word)
+          (progn
+            (setq index ii)
+            (return))))
+    index))
 
 (defun french-japanese-conv (in-file out-file)
   (let ((translated)
@@ -45,12 +59,3 @@
                        (format out-stream "~A,~A~%" french-word translated)
                        (format no-match-stream "~A~%" french-word))
                    (sleep 1))))))))
-
-
-
-
-
-
-
-
-
