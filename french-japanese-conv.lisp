@@ -8,22 +8,26 @@
 
 (defparameter *japanese-french-dic-url* "http://9.dee.cc/~hakase2/tokuken.php")
 
-(defun get-japanese (french-word)
+(defun get-japanese (target-word)
   (let* ((result-html (dex:post *japanese-french-dic-url*
-                                :content `(("mado" . ,french-word)
+                                :content `(("mado" . ,target-word)
                                            ("erab" . "tango")
                                            ("ktype" . "1"))))
          (parse-tree (plump:parse result-html))
-         (sub-tree)
-         (sub-tree-text))
-    (setq sub-tree (clss:select "p.yakcs" parse-tree))
-    (if (<=  (length sub-tree) 0)
-        (setq sub-tree-text "")
+         (word-tree)
+         (meaning-tree)
+         (meaning-text ""))
+    (setq word-tree (clss:select "span.midcs" parse-tree))
+    (setq meaning-tree (clss:select "p.yakcs" parse-tree))
+    (if (and (>  (length meaning-tree) 0) (>  (length meaning-tree) 0))
         (progn
-          (setq sub-tree (aref sub-tree 0))
-          (setq sub-tree-text (plump:text sub-tree))
-          (setq sub-tree-text (substitute #\、 #\, sub-tree-text))))
-    sub-tree-text
+          (setq word-tree (aref word-tree 0))
+          (if (string= target-word (plump:text word-tree))
+              (progn
+                (setq meaning-tree (aref meaning-tree 0))
+                (setq meaning-text (plump:text meaning-tree))
+                (setq meaning-text (substitute #\、 #\, meaning-text))))))
+    meaning-text
     ))
 
 (defun french-japanese-conv (in-file out-file)
