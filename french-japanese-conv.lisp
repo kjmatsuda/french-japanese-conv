@@ -10,7 +10,6 @@
 
 (defparameter *japanese-french-dic-url* "http://9.dee.cc/~hakase2/tokuken.php")
 
-;; TODO meaning-treeの1件目を無条件に選ぶのではなくdomを検索して、一致したindexを使用する
 (defun get-japanese (target-word)
   (let* ((result-html (dex:post *japanese-french-dic-url*
                                 :content `(("mado" . ,target-word)
