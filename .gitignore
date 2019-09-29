@@ -1,5 +1,7 @@
 *.csv
 *.txt
+*.fasl
+simplewordbook.xml
 GPATH
 GRTAGS
 GTAGS

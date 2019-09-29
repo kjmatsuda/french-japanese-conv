@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><simplewordbook version="10700">
+<wordbook name="test word list1" numOfWords="1" numOfMemorizedWords="0" numOfWeakWords="0" createdAt="2018-10-07 18:30:06" updatedAt="2018-10-07 18:30:06">
+<word word="avoir" answer="持つ" memorizedAt="" weak="0" createdAt="2018-10-07 18:31:58" updatedAt="2018-10-07 18:31:58"/>
+<word word="jamais" answer="決っして~ない" memorizedAt="" weak="0" createdAt="2018-10-07 18:31:58" updatedAt="2018-10-07 18:31:58"/>
+</wordbook>
+<wordbook name="test word list2" numOfWords="1" numOfMemorizedWords="0" numOfWeakWords="0" createdAt="2018-10-07 18:30:06" updatedAt="2018-10-07 18:30:06">
+<word word="attendre" answer="待つ" memorizedAt="2018-10-07 18:31:58" weak="0" createdAt="2018-10-07 18:31:58" updatedAt="2018-10-07 18:31:58"/>
+<word word="tenue" answer="" memorizedAt="" weak="0" createdAt="2018-10-07 18:31:58" updatedAt="2018-10-07 18:31:58"/>
+</wordbook>
+<wordbook name="test word list3" numOfWords="1" numOfMemorizedWords="0" numOfWeakWords="0" createdAt="2018-10-07 18:30:06" updatedAt="2018-10-07 18:30:06">
+<word word="rire" answer="" memorizedAt="2018-10-07 18:31:58" weak="0" createdAt="2018-10-07 18:31:58" updatedAt="2018-10-07 18:31:58"/>
+</wordbook>
+</simplewordbook>
