@@ -11,7 +11,7 @@
 
 (defconstant *const-match-loop-max* 10)
 
-(defparameter *japanese-french-dic-url* "http://9.dee.cc/~hakase2/tokuken.php")
+(defparameter *japanese-french-dic-url* "http://frjp.boots.jp/tokuken.php")
 
 (defparameter *simplewordbook-xml* nil)
 
